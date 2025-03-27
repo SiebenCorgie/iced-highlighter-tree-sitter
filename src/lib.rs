@@ -24,7 +24,8 @@
 //! ```
 
 use std::{ops::Range, sync::Arc};
-
+pub use tree_sitter_highlight;
+pub use tree_sitter_highlight::HighlightConfiguration;
 use tree_sitter_highlight::HighlightEvent;
 
 ///Standard formating function. Assumes that you use the `highlight_names` defined [here](https://crates.io/crates/tree-sitter-highlight).
