@@ -1,14 +1,11 @@
-use iced::widget::{column, horizontal_space, row, text, text_editor, toggler};
+use iced::widget::{column, row, space, text, text_editor, toggler};
 use iced::{Center, Element, Fill, Font, Task, Theme};
 use iced_highlighter_tree_sitter::TSSettings;
 
 use std::path::PathBuf;
 
 pub fn main() -> iced::Result {
-    iced::application("Editor - Iced", Editor::update, Editor::view)
-        .theme(Editor::theme)
-        .default_font(Font::MONOSPACE)
-        .run()
+    iced::run(Editor::update, Editor::view)
 }
 
 struct Editor {
@@ -66,7 +63,7 @@ impl Editor {
 
     fn view(&self) -> Element<Message> {
         let controls = row![
-            horizontal_space(),
+            space::horizontal(),
             toggler(self.word_wrap)
                 .label("Word Wrap")
                 .on_toggle(Message::WordWrapToggled)
@@ -86,9 +83,12 @@ impl Editor {
             } else {
                 String::from("New file")
             }),
-            horizontal_space(),
+            space::horizontal(),
             text({
-                let (line, column) = self.content.cursor_position();
+                let (line, column) = (
+                    self.content.cursor().position.line,
+                    self.content.cursor().position.column,
+                );
 
                 format!("{}:{}", line + 1, column + 1)
             })
@@ -100,6 +100,7 @@ impl Editor {
             text_editor(&self.content)
                 .height(Fill)
                 .on_action(Message::ActionPerformed)
+                .font(Font::MONOSPACE)
                 .wrapping(if self.word_wrap {
                     text::Wrapping::Word
                 } else {

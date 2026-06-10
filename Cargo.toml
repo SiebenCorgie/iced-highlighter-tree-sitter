@@ -4,10 +4,10 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-iced = { version = "0.13.1", default-features = false, features = ["advanced"] }
-tree-sitter-highlight = "0.25.3"
+iced = { version = "0.14", default-features = false, features = ["advanced", "linux-theme-detection", "x11", "wayland"] }
+tree-sitter-highlight = "0.26.9"
 
 [dev-dependencies]
 #Used for syntax highlighting in the example
 tree-sitter-rust = "0.23.2"
-iced = { version = "0.13.1" }
+iced = { version = "0.14" }
